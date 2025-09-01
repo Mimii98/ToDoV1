@@ -1,6 +1,7 @@
 using SQLitePCL;
 using Microsoft.Data.Sqlite;
 
+
 namespace To_Do_Liste
 {
     public partial class Form1 : Form
@@ -10,7 +11,7 @@ namespace To_Do_Liste
         //Konstruktor
         public Form1()
         {
-            MessageBox.Show("Halooooo");
+            
             InitializeComponent();
             connection = new SqliteConnection("Data Source = todo.db");
             connection.Open();
@@ -20,6 +21,7 @@ namespace To_Do_Liste
                                 Description TEXT NOT NULL,
                                 IsCompleted INTEGER NOT NULL
                                 );";
+           
             cmd.ExecuteNonQuery();
 
 

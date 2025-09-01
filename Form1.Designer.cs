@@ -1,7 +1,9 @@
-﻿namespace To_Do_Liste
+﻿
+namespace To_Do_Liste
 {
-    partial class Form1
+    partial class Form1 
     {
+     
         /// <summary>
         ///  Required designer variable.
         /// </summary>
