@@ -11,8 +11,10 @@ namespace To_Do_Liste
         //Konstruktor
         public Form1()
         {
+            
 
             InitializeComponent();
+            Batteries.Init();
             using (var connection = new SqliteConnection("Data Source=todo.db"))
             {
                 connection.Open();
@@ -49,6 +51,8 @@ namespace To_Do_Liste
 
         }
 
+
+        //(Speichern Button) Zum Aufgaben hinzufügen 
         private void button1_Click(object sender, EventArgs e)
         {
             var task = textBox1.Text;
@@ -74,9 +78,6 @@ namespace To_Do_Liste
 
         }
 
-        private void ListBox_MouseDoubleClick(object sender, MouseEventArgs e)
-        {
-
-        }
+       
     }
 }

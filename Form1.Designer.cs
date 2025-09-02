@@ -45,7 +45,7 @@ namespace To_Do_Liste
             ListBox.Size = new Size(306, 378);
             ListBox.TabIndex = 0;
             ListBox.SelectedIndexChanged += checkedListBox1_SelectedIndexChanged;
-            ListBox.MouseDoubleClick += ListBox_MouseDoubleClick;
+          
             // 
             // textBox1
             // 
