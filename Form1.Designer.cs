@@ -31,7 +31,7 @@ namespace To_Do_Liste
         private void InitializeComponent()
         {
             ListBox = new CheckedListBox();
-            TxtBox = new TextBox();
+            textBox1 = new TextBox();
             BtnSave = new Button();
             BtnDel = new Button();
             label1 = new Label();
@@ -45,14 +45,15 @@ namespace To_Do_Liste
             ListBox.Size = new Size(306, 378);
             ListBox.TabIndex = 0;
             ListBox.SelectedIndexChanged += checkedListBox1_SelectedIndexChanged;
+            ListBox.MouseDoubleClick += ListBox_MouseDoubleClick;
             // 
-            // TxtBox
+            // textBox1
             // 
-            TxtBox.Location = new Point(22, 68);
-            TxtBox.Name = "TxtBox";
-            TxtBox.Size = new Size(342, 27);
-            TxtBox.TabIndex = 1;
-            TxtBox.TextChanged += textBox1_TextChanged;
+            textBox1.Location = new Point(22, 68);
+            textBox1.Name = "textBox1";
+            textBox1.Size = new Size(342, 27);
+            textBox1.TabIndex = 1;
+            textBox1.TextChanged += textBox1_TextChanged;
             // 
             // BtnSave
             // 
@@ -91,7 +92,7 @@ namespace To_Do_Liste
             Controls.Add(label1);
             Controls.Add(BtnDel);
             Controls.Add(BtnSave);
-            Controls.Add(TxtBox);
+            Controls.Add(textBox1);
             Controls.Add(ListBox);
             Name = "Form1";
             Text = "Form1";
@@ -103,7 +104,7 @@ namespace To_Do_Liste
         #endregion
 
         private CheckedListBox ListBox;
-        private TextBox TxtBox;
+        private TextBox textBox1;
         private Button BtnSave;
         private Button BtnDel;
         private Label label1;
