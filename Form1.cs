@@ -1,12 +1,13 @@
 using SQLitePCL;
 using Microsoft.Data.Sqlite;
+using System;
 
 
 namespace To_Do_Liste
 {
     public partial class Form1 : Form
     {
-
+        public SqliteConnection connection;
 
         //Konstruktor
         public Form1()
@@ -34,9 +35,20 @@ namespace To_Do_Liste
         }
         private void Form1_Load(object sender, EventArgs e)
         {
+            ListBox.Items.Clear();
+            while (true)
+            { 
+                using (var connection = new SqliteConnection("Data Source=todo.db"))
+                connection.Open();
+                using (var cmd = connection.CreateCommand())
+                {
 
+                    cmd.CommandText = "SELECT Description FROM tasks WHERE IsCompleted = 0;";
+
+                }
+            }
         }
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e) 
         {
 
         }
