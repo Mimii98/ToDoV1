@@ -7,7 +7,7 @@ namespace To_Do_Liste
 {
     public partial class Form1 : Form
     {
-        public SqliteConnection? connection;
+        public SqliteConnection connection = new SqliteConnection("Data Source=todo.db");
 
         //Konstruktor
         public Form1()
@@ -16,7 +16,7 @@ namespace To_Do_Liste
 
             InitializeComponent();
             Batteries.Init();
-            using var connection = new SqliteConnection("Data Source=todo.db");
+           
             connection.Open();
             using (var cmd = connection.CreateCommand())
             {
@@ -24,7 +24,7 @@ namespace To_Do_Liste
                                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                                 Description TEXT NOT NULL,
                                 IsCompleted INTEGER NOT NULL
-                                );";
+                                )";
                 
 
             }
@@ -33,16 +33,16 @@ namespace To_Do_Liste
         private void Form1_Load(object sender, EventArgs e)
         {
             ListBox.Items.Clear();
-            while (true)
-            { 
-                using (var connection = new SqliteConnection("Data Source=todo.db"))
-                connection.Open();
-                using (var cmd = connection.CreateCommand())
-                {
-
-                    cmd.CommandText = "SELECT Description FROM tasks WHERE IsCompleted = 0;";
-
-                }
+            connection.Open();
+            using (var cmd = connection.CreateCommand())
+            {
+               cmd.CommandText = "SELECT Description FROM tasks WHERE IsCompleted = 0;";
+               using var reader = cmd.ExecuteReader();
+               while (reader.Read())
+               {
+                  var description = reader.GetString(0);
+                  ListBox.Items.Add(description);
+               }
             }
         }
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e) 
@@ -72,7 +72,7 @@ namespace To_Do_Liste
                 return;
             }
 
-            using (var connection = new SqliteConnection("Data Source=todo.db"))
+            
             {
                 connection.Open();
                 using (var cmd = connection.CreateCommand())
@@ -83,8 +83,6 @@ namespace To_Do_Liste
                 }
             }
             textBox1.Clear();
-
-
         }
 
        
