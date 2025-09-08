@@ -7,7 +7,7 @@ namespace To_Do_Liste
 {
     public partial class Form1 : Form
     {
-        public SqliteConnection connection;
+        public SqliteConnection? connection;
 
         //Konstruktor
         public Form1()
@@ -16,19 +16,16 @@ namespace To_Do_Liste
 
             InitializeComponent();
             Batteries.Init();
-            using (var connection = new SqliteConnection("Data Source=todo.db"))
+            using var connection = new SqliteConnection("Data Source=todo.db");
+            connection.Open();
+            using (var cmd = connection.CreateCommand())
             {
-                connection.Open();
-                using (var cmd = connection.CreateCommand())
-                {
-                    cmd.CommandText = @"CREATE TABLE IF NOT EXISTS tasks (
+                cmd.CommandText = @"CREATE TABLE IF NOT EXISTS tasks (
                                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                                 Description TEXT NOT NULL,
                                 IsCompleted INTEGER NOT NULL
                                 );";
-                    cmd.ExecuteNonQuery();
-
-                }
+                
 
             }
 
@@ -82,7 +79,7 @@ namespace To_Do_Liste
                 {
                     cmd.CommandText = "INSERT INTO tasks (Description, IsCompleted) VALUES (@description, 0);";
                     cmd.Parameters.AddWithValue("@description", task);
-                    cmd.ExecuteNonQuery();
+                   
                 }
             }
             textBox1.Clear();
