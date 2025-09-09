@@ -43,6 +43,7 @@ namespace To_Do_Liste
                   var description = reader.GetString(0); //Liest die Beschreibung der Aufgabe aus der ersten Spalte
                     ListBox.Items.Add(description); //Fügt die Beschreibung der Liste hinzu
                 }
+               
             }
         }
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e) 
@@ -58,6 +59,7 @@ namespace To_Do_Liste
         //Button zum Löschen der Aufgabe)
         private void button2_Click(object sender, EventArgs e)
         {
+
 
         }
 
@@ -77,10 +79,11 @@ namespace To_Do_Liste
             {
                 connection.Open();
                 using (var cmd = connection.CreateCommand())
+
                 {
                     cmd.CommandText = "INSERT INTO tasks (Description, IsCompleted) VALUES (@description, 0);";
                     cmd.Parameters.AddWithValue("@description", task);
-                   
+                    cmd.ExecuteNonQuery();
                 }
             }
             textBox1.Clear();
