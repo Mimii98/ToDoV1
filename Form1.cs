@@ -32,17 +32,17 @@ namespace To_Do_Liste
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            ListBox.Items.Clear();
-            connection.Open();
-            using (var cmd = connection.CreateCommand())
+            ListBox.Items.Clear(); //Löscht die Liste bevor sie neu geladen wird
+            connection.Open(); //öffnet die Verbindung zur Datenbank
+            using (var cmd = connection.CreateCommand()) //Erstellt ein neues SQL-Kommando
             {
-               cmd.CommandText = "SELECT Description FROM tasks WHERE IsCompleted = 0;";
-               using var reader = cmd.ExecuteReader();
-               while (reader.Read())
-               {
-                  var description = reader.GetString(0);
-                  ListBox.Items.Add(description);
-               }
+               cmd.CommandText = "SELECT Description FROM tasks WHERE IsCompleted = 0;"; //SQL-Befehl um alle Aufgaben die nicht erledigt sind auszuwählen
+                using var reader = cmd.ExecuteReader(); //Führt das Kommando aus und gibt einen Reader zurück um die Ergebnisse zu lesen
+                while (reader.Read()) //Liest jede Zeile im Ergebnis
+                {
+                  var description = reader.GetString(0); //Liest die Beschreibung der Aufgabe aus der ersten Spalte
+                    ListBox.Items.Add(description); //Fügt die Beschreibung der Liste hinzu
+                }
             }
         }
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e) 
@@ -55,6 +55,7 @@ namespace To_Do_Liste
 
         }
 
+        //Button zum Löschen der Aufgabe)
         private void button2_Click(object sender, EventArgs e)
         {
 
