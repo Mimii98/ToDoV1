@@ -1,6 +1,6 @@
 using SQLitePCL;
 using Microsoft.Data.Sqlite;
-using System;
+using System; 
 
 
 namespace To_Do_Liste
@@ -15,8 +15,8 @@ namespace To_Do_Liste
             
 
             InitializeComponent();
-            Batteries.Init();
-           
+            Batteries.Init(); //Initialisiert die SQLite-Bibliothek
+
             connection.Open();
             using (var cmd = connection.CreateCommand())
             {
@@ -88,7 +88,10 @@ namespace To_Do_Liste
             }
             textBox1.Clear();
         }
+        private void CheckedListBox1_ItemCheck(Object sender, ItemCheckEventArgs e)
+        {
+            
+        }
 
-       
     }
 }

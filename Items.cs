@@ -12,16 +12,16 @@ namespace To_Do_Liste
 
         public int id  { get; set; }
 
-        public string description { get; set; }
+        public string Description { get; set; }
 
-        public bool isCompleted { get; set; }
+        public bool IsCompleted { get; set; }
 
-        //Konstruktor
+        
 
-        public override string ToString()
+        public override string ToString() 
         {
-            string status = isCompleted ? "[X] " : "[ ] ";
-            return $"{status}{description}";
+            string status = IsCompleted ? "[X] " : "[ ] ";
+            return $"{status}{Description}";
 
 
         }
