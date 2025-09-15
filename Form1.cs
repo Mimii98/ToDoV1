@@ -32,7 +32,7 @@ namespace To_Do_Liste
         }
         private void Form1_Load(object sender, EventArgs e)
         {
-            ListBox.Items.Clear(); //Löscht die Liste bevor sie neu geladen wird
+           
             connection.Open(); //öffnet die Verbindung zur Datenbank
             using (var cmd = connection.CreateCommand()) //Erstellt ein neues SQL-Kommando
             {
@@ -46,10 +46,22 @@ namespace To_Do_Liste
                
             }
         }
-        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e) 
+        
+        // CheckedListBox SelectedIndexChanged Event (wird ausgelöst wenn eine Aufgabe abgehakt wird)
+        private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
-
+            if (ListBox.SelectedItem == null) return; //Überprüft ob eine Aufgabe ausgewählt ist
+            var selectedTask = ListBox.SelectedItem.ToString(); //Liest die ausgewählte Aufgabe aus der Liste
+            connection.Open(); //Öffnet die Verbindung zur Datenbank
+            using (var cmd = connection.CreateCommand()) //Erstellt ein neues SQL-Kommando
+            {
+                cmd.CommandText = "UPDATE tasks SET IsCompleted = 1 WHERE Description = @description;"; //SQL-Befehl um die Aufgabe als erledigt zu markieren
+                cmd.Parameters.AddWithValue("@description", selectedTask); //Fügt den Parameter für die Beschreibung hinzu
+                cmd.ExecuteNonQuery(); //Führt das Kommando aus
+            }
+            
         }
+
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
