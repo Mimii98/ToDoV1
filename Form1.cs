@@ -25,7 +25,7 @@ namespace To_Do_Liste
                                 Description TEXT NOT NULL,
                                 IsCompleted INTEGER NOT NULL
                                 )"; //SQL-Befehl um die Tabelle zu erstellen wenn sie nicht existiert
-
+                cmd.ExecuteReader(); //Führt das Kommando aus
 
             }
 
@@ -39,12 +39,12 @@ namespace To_Do_Liste
             connection.Open(); //öffnet die Verbindung zur Datenbank
             using (var cmd = connection.CreateCommand()) //Erstellt ein neues SQL-Kommando
             {
-               cmd.CommandText = "SELECT Description FROM tasks WHERE IsCompleted = 0;"; //SQL-Befehl um alle Aufgaben die nicht erledigt sind auszuwählen
+               cmd.CommandText = @"SELECT Description FROM tasks WHERE IsCompleted = 0;"; //SQL-Befehl um alle Aufgaben die nicht erledigt sind auszuwählen
                 using var reader = cmd.ExecuteReader(); //Führt das Kommando aus und gibt einen Reader zurück um die Ergebnisse zu lesen
                 while (reader.Read()) //Liest jede Zeile im Ergebnis
                 {
                   var description = reader.GetString(0); //Liest die Beschreibung der Aufgabe aus der ersten Spalte
-                    ListBox.Items.Add(description); //Fügt die Beschreibung der Liste hinzu
+                   ListBox.Items.Add(description); //Fügt die Beschreibung der Liste hinzu
                 }
                
             }
@@ -60,7 +60,7 @@ namespace To_Do_Liste
             connection.Open(); //Öffnet die Verbindung zur Datenbank
             using (var cmd = connection.CreateCommand()) //Erstellt ein neues SQL-Kommando
             {
-                cmd.CommandText = "UPDATE tasks SET IsCompleted = 1 WHERE Description = @description;"; //SQL-Befehl um die Aufgabe als erledigt zu markieren
+                cmd.CommandText = @"UPDATE tasks SET IsCompleted = 1 WHERE Description = @description;"; //SQL-Befehl um die Aufgabe als erledigt zu markieren
                 cmd.Parameters.AddWithValue("@description", selectedTask); //Fügt den Parameter für die Beschreibung hinzu
                 cmd.ExecuteNonQuery(); //Führt das Kommando aus
             }
@@ -87,7 +87,7 @@ namespace To_Do_Liste
                 
                 using (var cmd = connection.CreateCommand()) //Erstellt ein neues SQL-Kommando
                 {
-                    cmd.CommandText = "DELETE FROM tasks WHERE id = (@id)"; // SQL-Befehl um die Aufgabe zu löschen
+                    cmd.CommandText = @"DELETE FROM tasks WHERE id = (@id)"; // SQL-Befehl um die Aufgabe zu löschen
                     cmd.Parameters.AddWithValue(@"id", selectedTask); //Fügt den Parameter für die Beschreibung hinzu
                     cmd.ExecuteNonQuery(); //Führt das Kommando aus
                     
@@ -116,7 +116,7 @@ namespace To_Do_Liste
                 using (var cmd = connection.CreateCommand())
 
                 {
-                    cmd.CommandText = "INSERT INTO tasks (Description, IsCompleted) VALUES (@description, 0);";
+                    cmd.CommandText = @"INSERT INTO tasks (Description, IsCompleted) VALUES (@description, 0);";
                     cmd.Parameters.AddWithValue("@description", task);
                     cmd.ExecuteNonQuery();
                     ListBox.Items.Add(task);
