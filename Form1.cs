@@ -24,15 +24,18 @@ namespace To_Do_Liste
                                 Id INTEGER PRIMARY KEY AUTOINCREMENT,
                                 Description TEXT NOT NULL,
                                 IsCompleted INTEGER NOT NULL
-                                )";
-                
+                                )"; //SQL-Befehl um die Tabelle zu erstellen wenn sie nicht existiert
+
 
             }
 
         }
+
+
+        //Form Load Event (wird ausgelöst wenn das Formular geladen wird)
         private void Form1_Load(object sender, EventArgs e)
         {
-           
+            
             connection.Open(); //öffnet die Verbindung zur Datenbank
             using (var cmd = connection.CreateCommand()) //Erstellt ein neues SQL-Kommando
             {
@@ -47,6 +50,8 @@ namespace To_Do_Liste
             }
         }
         
+
+
         // CheckedListBox SelectedIndexChanged Event (wird ausgelöst wenn eine Aufgabe abgehakt wird)
         private void checkedListBox1_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -63,17 +68,36 @@ namespace To_Do_Liste
         }
 
 
+
+        // TextBox TextChanged Event (wird ausgelöst wenn der Text in der TextBox geändert wird)
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
 
         }
 
+
+
         //Button zum Löschen der Aufgabe)
         private void button2_Click(object sender, EventArgs e)
         {
+            {
+                if (ListBox.SelectedItem == null) return; //Überprüft ob eine Aufgabe ausgewählt ist
+                var selectedTask = ListBox.SelectedItem.ToString(); //Liest die ausgewählte Aufgabe aus der Liste
+                connection.Open(); //Öffnet die Verbindung zur Datenbank
+                
+                using (var cmd = connection.CreateCommand()) //Erstellt ein neues SQL-Kommando
+                {
+                    cmd.CommandText = "DELETE FROM tasks WHERE id = (@id)"; // SQL-Befehl um die Aufgabe zu löschen
+                    cmd.Parameters.AddWithValue(@"id", selectedTask); //Fügt den Parameter für die Beschreibung hinzu
+                    cmd.ExecuteNonQuery(); //Führt das Kommando aus
+                    
+                    ListBox.Items.Remove(selectedTask); //Entfernt die Aufgabe aus der Liste
+                    ListBox.Update(); //Aktualisiert die Liste
+                }
 
+            }
 
-        }
+        }   
 
 
         //(Speichern Button) Zum Aufgaben hinzufügen 
@@ -87,7 +111,6 @@ namespace To_Do_Liste
                 return;
             }
 
-            
             {
                 connection.Open();
                 using (var cmd = connection.CreateCommand())
@@ -96,13 +119,18 @@ namespace To_Do_Liste
                     cmd.CommandText = "INSERT INTO tasks (Description, IsCompleted) VALUES (@description, 0);";
                     cmd.Parameters.AddWithValue("@description", task);
                     cmd.ExecuteNonQuery();
+                    ListBox.Items.Add(task);
                 }
             }
+           
             textBox1.Clear();
+
         }
+
+        // CheckedListBox ItemCheck Event (wird ausgelöst wenn eine Aufgabe abgehakt wird)
         private void CheckedListBox1_ItemCheck(Object sender, ItemCheckEventArgs e)
         {
-            
+
         }
 
     }
