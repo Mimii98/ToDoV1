@@ -6,14 +6,13 @@ using System;
 namespace To_Do_Liste
 {
     public partial class Form1 : Form
-    {
+    {    
+        //  Klassenvariable damit sie überall verwendbar ist.
         public SqliteConnection connection = new SqliteConnection("Data Source=todo.db");
 
         //Konstruktor
         public Form1()
         {
-            
-
             InitializeComponent();
             Batteries.Init(); //Initialisiert die SQLite-Bibliothek
 
